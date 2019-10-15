@@ -16,7 +16,7 @@ resource "scaleway_server" "ubuntu" {
   tags  = ["lab-automation-wordpress"]
   state = "running"
   provisioner "local-exec" {
-    command = "while [ $(nc -z ${self.public_ip} 22 ; echo $?) == 1 ] ; do echo wait ; sleep 10 ; done ; scp -oStrictHostKeyChecking=no wordpress_setup.sh root@'${self.public_ip}':/root ; ssh -oStrictHostKeyChecking=no root@'${self.public_ip}' bash -x wordpress_setup.sh ; echo https://'${self.public_ip}'.nip.io >> sites.txt"
+    command = "while [ $(nc -z ${self.public_ip} 22 ; echo $?) == 1 ] ; do echo wait ; sleep 10 ; done ; scp -oStrictHostKeyChecking=no wordpress_setup.sh root@'${self.public_ip}':/root ; ssh -oStrictHostKeyChecking=no root@'${self.public_ip}' bash -x wordpress_setup.sh ; echo https://www.'${self.public_ip}'.nip.io >> sites.txt"
   }
 }
 
@@ -34,7 +34,7 @@ resource "scaleway_server" "centos" {
   tags  = ["lab-automation-wordpress"]
   state = "running"
   provisioner "local-exec" {
-    command = "while [ $(nc -z ${self.public_ip} 22 ; echo $?) == 1 ] ; do echo wait ; sleep 10 ; done ; scp -oStrictHostKeyChecking=no wordpress_setup.sh root@'${self.public_ip}':/root ; ssh -oStrictHostKeyChecking=no root@'${self.public_ip}' bash -x wordpress_setup.sh ; echo https://'${self.public_ip}'.nip.io >> sites.txt"
+    command = "while [ $(nc -z ${self.public_ip} 22 ; echo $?) == 1 ] ; do echo wait ; sleep 10 ; done ; scp -oStrictHostKeyChecking=no wordpress_setup.sh root@'${self.public_ip}':/root ; ssh -oStrictHostKeyChecking=no root@'${self.public_ip}' bash -x wordpress_setup.sh ; echo https://www.'${self.public_ip}'.nip.io >> sites.txt"
   }
 }
 
@@ -52,6 +52,6 @@ resource "scaleway_server" "fedora" {
   tags  = ["lab-automation-wordpress"]
   state = "running"
   provisioner "local-exec" {
-    command = "while [ $(nc -z ${self.public_ip} 22 ; echo $?) == 1 ] ; do echo wait ; sleep 10 ; done ; scp -oStrictHostKeyChecking=no wordpress_setup.sh root@'${self.public_ip}':/root ; ssh -oStrictHostKeyChecking=no root@'${self.public_ip}' bash -x wordpress_setup.sh ; echo https://'${self.public_ip}'.nip.io >> sites.txt"  
+    command = "while [ $(nc -z ${self.public_ip} 22 ; echo $?) == 1 ] ; do echo wait ; sleep 10 ; done ; scp -oStrictHostKeyChecking=no wordpress_setup.sh root@'${self.public_ip}':/root ; ssh -oStrictHostKeyChecking=no root@'${self.public_ip}' bash -x wordpress_setup.sh ; echo https://www.'${self.public_ip}'.nip.io >> sites.txt"
   }
 }
