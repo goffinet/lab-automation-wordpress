@@ -1,3 +1,4 @@
 .terraform*
 terraform*
 sites.txt
+.DS_Store
