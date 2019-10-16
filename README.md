@@ -68,7 +68,7 @@
 <!-- /TOC -->
 
 
-Vous vous initiez à l'administration DevOps du [moteur de blogging Wordpress](https://fr.wikipedia.org/wiki/WordPress). Dans une première approche vous cherchez un base pour commencer votre déploiement. Vous choisissez un article dont le nom est évocateur : [How to Install LAMP Stack on Fedora 27](https://linoxide.com/linux-how-to/install-lamp-stack-fedora-27/). Car la machine qui est approvisionnée chez Scaleway est un DEV1-S avec une image Fedora 27.
+Vous vous initiez à l'administration DevOps du [moteur de blogging Wordpress](https://fr.wikipedia.org/wiki/WordPress). Dans une première approche vous cherchez un base pour commencer votre déploiement. Vous choisissez un article dont le nom est évocateur : [How to Install LAMP Stack on Fedora 27](https://linoxide.com/linux-how-to/install-lamp-stack-fedora-27/). Car la machine qui est approvisionnée chez [Scaleway est un DEV1-S](https://www.scaleway.com/fr/instances-virtuelles/development/) avec une image Fedora 27.
 
 Vous démarrez donc en [Fedora 27](https://linux.goffinet.org/01-02-distributions-linux-et-cycles-de-maintenance/#72-fedora) pour déployer un serveur Wordpress basé sur le [stack LAMP](https://fr.wikipedia.org/wiki/LAMP).
 
@@ -164,6 +164,8 @@ On sera curieux d'examiner la configuration du serveur Web située dans l'emplac
 
 ```bash
 egrep -v '^$|^[[:blank:]]*#' /etc/httpd/conf/httpd.conf
+```
+```
 ServerRoot "/etc/httpd"
 Listen 80
 Include conf.modules.d/*.conf
@@ -631,7 +633,8 @@ Toutefois, on peut suggérer quelques optimisations qui rendraient la procédure
 
 * Les étapes logiques pourraient être présentées sous forme de fonctions.
 * Toute une série de paramètres pourraient subir une mise en variable.
-* Enfin la seconde étape d'installation de Wordpress semble peu robuste. On proposera ici d'utiliser wp-cli.
+* La gestion des mots de passe est un enjeu ici. Leur choix aléatoire devrait aider l'utilisateur. La question de leur confidentialité (_a secret_ en anglais) se pose.
+* Enfin la seconde étape d'installation de Wordpress semble peu robuste. On proposera ici d'utiliser le binaire `wp-cli` pour gérer le moteur de blog.
 
 Voici un troisième exercice qui illustre ces optimisations.
 
@@ -688,7 +691,6 @@ firewall-cmd --zone=public --permanent --add-service=http
 firewall-cmd --reload
 }
 ```
-
 
 ### 3.5. Sécuriser Mariabd et le configurer pour Wordpress
 
@@ -977,7 +979,7 @@ Enfin, sous Ubuntu Bionic (18.04 LTS), configuration du paquet `tzdata` n'est pa
 
 ### 5.2. Allow-root WP-CLI
 
-Aussi, on remarquera que `wp-cli` n'autorise pas à priori une exécution en tant que root, ce qui nous oblige à ajouter la directive `--allow-root` sur les commandes concernées.
+Aussi, on remarquera que `wp-cli` n'autorise pas à priori une exécution en tant qu'utilisateur `root`, ce qui nous oblige à ajouter la directive `--allow-root` sur les commandes concernées.
 
 ```bash
 wordpress_installation() {
@@ -1104,6 +1106,8 @@ Ici, juste pour mémoire sur Ubuntu.
 </VirtualHost>
 ```
 
+En Debian / Ubuntu, une configuration `000-default` est présentez dans le répertoire `/etc/apache2/sites-available`. Aussi, le script `a2ensite` active un hôte virtuel et le script `a2dissite` en désactive un avec le nom du fichier de configuration en paramètre.
+
 ```bash
 sudo a2ensite example.com.conf
 sudo a2dissite 000-default
@@ -1165,7 +1169,7 @@ fi
 
 ### 6.6. Certbot Let's Encrypt
 
-L'utilitaire certbot permet de générer des certificats TLS valides automatiquement à condition qu'un **enregistrement DNS publique** corresponde au site Web et qu'un **service HTTP** soit activé. Chaque distribution installe son paquet :
+L'utilitaire certbot permet de générer des certificats TLS valides automatiquement à condition qu'un **enregistrement DNS public** corresponde au site Web et qu'un **service HTTP** soit activé. Chaque distribution installe son paquet :
 
 Sous Fedora :
 
@@ -1191,7 +1195,7 @@ sudo apt-get install python-certbot-apache
 
 Une fonction dans le script pourrait ressembler à ceci :
 
-```raw
+```
 https_installation() {
 systemctl reload httpd || systemctl reload apache2
 chown apache:apache /run/php-fpm/www.sock 2> /dev/null
@@ -1222,7 +1226,7 @@ Include /etc/letsencrypt/options-ssl-apache.conf
 </IfModule>
 ```
 
-## 7. Déploiement Wordpress Haute Disponiblité
+## 7. Déploiement Wordpress Haute Disponiblité (IaaS)
 
 Inspiré de [Ansible playbooks to install Wordpress in a HA configuration on IBM Cloud IaaS](https://github.com/stevestrutt/wordpress_ansible_ibmcloud)
 
@@ -1328,7 +1332,7 @@ services:
 
 ## 9. Approvisionnement Ansible
 
-Stack LAMP/wordpress à partir d'Ansible. A documenter.
+Stack LAMP/wordpress à partir d'Ansible. A documenter. Voir plus haut.
 
 ## 10. Application Stateful Wordpress sur un cluster Kubernetes
 
