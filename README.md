@@ -1334,7 +1334,9 @@ Stack LAMP/wordpress à partir d'Ansible. A documenter.
 
 A documenter.
 
-## 11. Script final
+[GCP Click-to-deploy Wordpress](https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/wordpress)
+
+## 11. Script Bash final
 
 ```bash
 #!/bin/bash
