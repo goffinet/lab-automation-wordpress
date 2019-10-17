@@ -1,3 +1,8 @@
+---
+description: "Voici un lab progressif Linux Apache MySQL/MariaDB PHP (LAMP) avec l'application Wordpress sur un seul serveur. L'exercice démarre à partir d'un tutorial improbable pour se terminer en script Bash supporté par plusieurs distribution, l'activation des sécurités de base comme le pare-feu, les mots de passe ou encore HTTPS Lets Encrypt. Par François Goffinet."
+type: docs
+---
+
 # Lab Automation LAMP Wordpress
 
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
